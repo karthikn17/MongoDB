@@ -34,9 +34,9 @@ const findById = (empId, callback) =>{
 // add a new Employee document to the collection
 const addEmployee = (Employee,callback)=>{
         const EmployeeObj = new employeeModel(
-            {_empid:Employee._id,
-        _name:Employee.name,
-            _domain:Employee.domain})
+            {_empid:Employee._empid,
+        _name:Employee._name,
+            _domain:Employee._domain})
         employeeModel.create(EmployeeObj,(err,result)=>{
             callback(err,result)
         })
