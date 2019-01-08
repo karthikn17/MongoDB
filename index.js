@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser= require('body-parser');
-const app = express();
-const employeeService=require('./services/employeeService');
-app.use(bodyParser.json());
 
+const app = express();
+const security = require ('./services/security');
+const employeeService=require('./services/employeeService');
+
+app.use(bodyParser.json());
 
 var port = process.env.PORT || 3000;
 
@@ -16,6 +18,19 @@ app.listen(
         console.log('Server is up and running')
     }
 );
+
+app.post('/login',(rq,rs)=>{
+    rs.setHeader('content-type','application/json')
+    const employee=rq.body;
+    console.log(employee);
+    const jwtToken = security._generateToken(employee);
+    console.log(jwtToken);
+    rs.status(200).json({
+        msg:"Employee Identified",
+        token:jwtToken
+    })
+
+})
 
 //fetch all employees from mongo
 app.get('/employees/id/:id',(rq,rs)=>{
